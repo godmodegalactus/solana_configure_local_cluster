@@ -16,7 +16,6 @@ solana-validator \
     --gossip-port 8001 \
     --allow-private-addr \
     --log bootstrap-validator/log.txt \
-    --gossip-host 0.0.0.0 \
     "${@:1}" &
 
 solana-faucet -k faucet.json &
