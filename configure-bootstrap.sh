@@ -6,8 +6,6 @@ solana-keygen new --no-passphrase -o bootstrap-validator/vote.json
 solana-keygen new --no-passphrase -o bootstrap-validator/withdrawer.json
 solana-keygen new --no-passphrase -o bootstrap-validator/stake.json
 
-solana-keygen new --no-passphrase -o faucet.json
-
 echo "creating genesis block"
 
 solana-genesis \

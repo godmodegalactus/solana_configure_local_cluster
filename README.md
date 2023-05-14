@@ -23,6 +23,11 @@ Please install the required solana-cli version using this link (Solana-CLI)[http
 ./start-bootstrap.sh
 ```
 
+* Starting bootstrap validator to enable external nodes to join the cluster:
+```
+./start-bootstrap.sh --gossip-host CURRENT_HOST_IP
+```
+
 * Running a validator from the same node as bootstrap
 ```
 ./start-validator.sh 1
@@ -40,5 +45,5 @@ You can run more validator by changing 1 to other integers.
 * Staking a validator 1 with 1000 SOLs
 ```
 export validator1=$(solana address -k validator_1/vote.json)
-./stake-a-validator $validator1 1000
+./stake-a-validator.sh $validator1 1000
 ```
