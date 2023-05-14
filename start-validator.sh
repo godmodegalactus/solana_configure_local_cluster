@@ -40,7 +40,7 @@ let end_port=8000+$ID\*100+50
 dynamic_port_range=$"$start_port-$end_port"
 else
 gossip_entrypoint="$entrypoint_hostname":8001
-dynamic_port_range="8001:8050"
+dynamic_port_range="8001-8050"
 fi
 echo "gossip : $gossip_entrypoint port range $dynamic_port_range"
 
