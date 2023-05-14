@@ -31,6 +31,12 @@ Please install the required solana-cli version using this link (Solana-CLI)[http
 This will create a directory `validator_1` and create necessary files and ledger to run the validator.
 You can run more validator by changing 1 to other integers.
 
+* Running a validator on an external node
+```
+./start-validator.sh 1 BOOTSTRAP_VALIDATOR_IP_ADDRESS
+```
+
+
 * Staking a validator 1 with 1000 SOLs
 ```
 export validator1=$(solana address -k validator_1/vote.json)
