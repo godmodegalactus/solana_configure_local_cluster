@@ -8,7 +8,7 @@ usage: $0 ID [cluster entry point hostname] [solana validator arguments]
 Configure a validator with no stake
 
 Will create a new validator in folder validator_{ID}
-Cluster entry point name will be defaulted to [0.0.0.0] and 
+Cluster entry point name will be defaulted to [127.0.0.1] and 
 gossip portrange will be defaulted to [8000 + 100 * {ID} - 8000 + 100 * {ID} + 50 ]
 
 EOF
@@ -33,7 +33,7 @@ solana-keygen new --no-passphrase -o random_user.json
 entrypoint_hostname="$2"
 echo "host : $entrypoint_hostname"
 if [[ -z $entrypoint_hostname ]]; then
-gossip_entrypoint=0.0.0.0:8001
+gossip_entrypoint=127.0.0.1:8001
 let start_port=8000+$ID\*100
 let end_port=8000+$ID\*100+50
 dynamic_port_range=$"$start_port-$end_port"
