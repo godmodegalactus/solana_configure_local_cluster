@@ -15,6 +15,8 @@ solana-validator \
     --full-rpc-api \
     --gossip-port 8001 \
     --allow-private-addr \
+    --enable-rpc-transaction-history \
+    --enable-extended-tx-metadata-storage \
     --log bootstrap-validator/log.txt \
     "${@:1}" &
 

@@ -5,7 +5,7 @@ if [ -z "$1" ]
 
 usage: $0 ID [cluster entry point hostname] [solana validator arguments]
 
-Start a validator with no stake
+Configure a validator with no stake
 
 Will create a new validator in folder validator_{ID}
 Cluster entry point name will be defaulted to [0.0.0.0] and 
@@ -23,8 +23,12 @@ if ! [[ "$ID" =~ ^[0-9]+$ ]]
         exit 1
 fi
 
-
 VALIDATOR_DIR=validator_$ID
+solana-keygen new --no-passphrase -o $VALIDATOR_DIR/identity.json
+solana-keygen new --no-passphrase -o $VALIDATOR_DIR/vote.json
+solana-keygen new --no-passphrase -o $VALIDATOR_DIR/withdrawer.json
+solana-keygen new --no-passphrase -o $VALIDATOR_DIR/stake.json
+solana-keygen new --no-passphrase -o random_user.json
 
 entrypoint_hostname="$2"
 echo "host : $entrypoint_hostname"
@@ -45,26 +49,22 @@ echo "gossip : $gossip_entrypoint port range $dynamic_port_range"
 rpc_url=$(solana-gossip --allow-private-addr rpc-url --timeout 180 --entrypoint "$gossip_entrypoint")
 echo "rpc : $rpc_url"
 
-echo "Staring the validator"
+echo "Moving 1000 SOLs to new solana identity"
 
-rm $VALIDATOR_DIR/log.txt
+solana transfer --keypair faucet.json \
+  --url $rpc_url \
+  --allow-unfunded-recipient $VALIDATOR_DIR/identity.json 1000
 
-solana-validator \
-    --max-genesis-archive-unpacked-size 1073741824 \
-    --no-poh-speed-test \
-    --no-os-network-limits-test \
-    --entrypoint "$gossip_entrypoint" \
-    --identity $VALIDATOR_DIR/identity.json \
-    --vote-account $VALIDATOR_DIR/vote.json \
-    --ledger $VALIDATOR_DIR/ledger \
-    --log $VALIDATOR_DIR/log.txt \
-    --full-rpc-api \
-    --no-incremental-snapshots \
-    --require-tower \
-    --rpc-port $RPC_PORT \
-    --dynamic-port-range $dynamic_port_range \
-    --enable-rpc-transaction-history \
-    --enable-extended-tx-metadata-storage \
-    "${@:3}" &
+echo "Moving 100000 SOLs to a random user"
 
+solana transfer --keypair faucet.json \
+  --url $rpc_url \
+  --allow-unfunded-recipient \
+  random_user.json 100000
 
+echo "Creating vote account for the validator"
+
+solana create-vote-account \
+    --keypair $VALIDATOR_DIR/identity.json \
+    --url $rpc_url \
+    $VALIDATOR_DIR/vote.json $VALIDATOR_DIR/identity.json $VALIDATOR_DIR/withdrawer.json
