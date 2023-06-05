@@ -28,6 +28,11 @@ Please install the required solana-cli version using this link (Solana-CLI)[http
 ./start-bootstrap.sh --gossip-host CURRENT_HOST_IP
 ```
 
+* configuring a validator
+```
+./configure-validator 1
+```
+
 * Running a validator from the same node as bootstrap
 ```
 ./start-validator.sh 1
