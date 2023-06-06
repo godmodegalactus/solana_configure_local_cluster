@@ -33,7 +33,7 @@ gossip_entrypoint=127.0.0.1:8001
 let start_port=8000+$ID\*100
 let end_port=8000+$ID\*100+50
 dynamic_port_range=$"$start_port-$end_port"
-let RPC_PORT_VALUE=8899-$ID\*2
+let RPC_PORT_VALUE=8899-$ID\*100
 RPC_PORT=$RPC_PORT_VALUE
 else
 gossip_entrypoint="$entrypoint_hostname":8001

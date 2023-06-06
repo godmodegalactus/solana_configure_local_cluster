@@ -34,15 +34,9 @@ entrypoint_hostname="$2"
 echo "host : $entrypoint_hostname"
 if [[ -z $entrypoint_hostname ]]; then
 gossip_entrypoint=127.0.0.1:8001
-let start_port=8000+$ID\*100
-let end_port=8000+$ID\*100+50
-dynamic_port_range=$"$start_port-$end_port"
-let RPC_PORT_VALUE=8899-$ID
-RPC_PORT=$RPC_PORT_VALUE
 else
 gossip_entrypoint="$entrypoint_hostname":8001
 dynamic_port_range="8001-8050"
-RPC_PORT=8899
 fi
 echo "gossip : $gossip_entrypoint port range $dynamic_port_range"
 
