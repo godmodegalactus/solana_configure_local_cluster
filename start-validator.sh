@@ -38,7 +38,8 @@ RPC_PORT=$RPC_PORT_VALUE
 else
 gossip_entrypoint="$entrypoint_hostname":8001
 dynamic_port_range="8001-8050"
-RPC_PORT=8899
+let RPC_PORT_VALUE=8899-$ID\*100
+RPC_PORT=$RPC_PORT_VALUE
 fi
 echo "gossip : $gossip_entrypoint port range $dynamic_port_range"
 
@@ -66,6 +67,7 @@ solana-validator \
     --enable-rpc-transaction-history \
     --enable-extended-tx-metadata-storage \
     --allow-private-addr \
+    --skip-startup-ledger-verification \
     "${@:3}" &
 
 
